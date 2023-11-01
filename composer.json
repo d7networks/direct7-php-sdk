@@ -1,0 +1,27 @@
+{
+    "name": "direct7/direct7-php",
+    "description": "Direct7 SDK for PHP",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "direct7",
+        "php",
+        "sdk",
+        "rest-api"
+      ],
+    "authors": [
+        {
+            "name": "Direct7 Networks",
+            "email": "support@d7networks.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "php": "^8.1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "direct7\\Direct7\\": "src/"
+        }
+    }
+}
