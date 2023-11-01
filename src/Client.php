@@ -13,6 +13,11 @@ require_once __DIR__ . '/exceptions/ValidationError.php';
 require_once __DIR__ . '/exceptions/ClientError.php';
 require_once __DIR__ . '/exceptions/ServerError.php';
 require_once __DIR__ . '/Direct7/SMS.php';
+require_once __DIR__ . '/Direct7/VIBER.php';
+require_once __DIR__ . '/Direct7/SLACK.php';
+require_once __DIR__ . '/Direct7/VERIFY.php';
+require_once __DIR__ . '/Direct7/NUMBER_LOOKUP.php';
+require_once __DIR__ . '/Direct7/WHATSAPP.php';
 
 class Client
 {
@@ -21,6 +26,11 @@ class Client
     private $timeout = 30;
 
     public $sms;
+    public $viber;
+    public $slack;
+    public $verify;
+    public $number_lookup;
+    public $whatsapp;
 
     private $headers;
     private $guzzleClient;
@@ -37,6 +47,11 @@ class Client
         ];
 
         $this->sms = new SMS($this);
+        $this->viber = new VIBER($this);
+        $this->slack = new SLACK($this);
+        $this->verify = new VERIFY($this);
+        $this->number_lookup = new NumberLookup($this);
+        $this->whatsapp = new WHATSAPP($this);
 
         $this->guzzleClient = new GuzzleClient([
             'base_uri' => $this->host,
@@ -47,7 +62,7 @@ class Client
 
     private function getDirect7Version()
     {
-        return "1.0.0";
+        return "0.0.1";
     }
 
     private function createBearerTokenString()

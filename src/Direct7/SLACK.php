@@ -2,7 +2,7 @@
 
 namespace direct7\Direct7;
 
-class SMS
+class SLACK
 {
     private $client;
 
@@ -11,24 +11,23 @@ class SMS
         $this->client = $client;
     }
 
-    public function sendMessage($recipients, $content, $originator, $report_url = null, $unicode = false)
+    public function sendSlackMessage($content, $work_space_name, $channel_name, $report_url = null)
     {
+
         $message = [
-            "channel" => "sms",
-            "recipients" => $recipients,
+            "channel" => "slack",
             "content" => $content,
-            "msg_type" => "text",
-            "data_coding" => $unicode ? "unicode" : "text",
+            "work_space_name" => $work_space_name,
+            "channel_name" => $channel_name
         ];
 
         $messageGlobals = [
-            "originator" => $originator,
-            "report_url" => $report_url,
+            "report_url" => $report_url
         ];
 
         $response = $this->client->post("/messages/v1/send", [
             "messages" => [$message],
-            "message_globals" => $messageGlobals,
+            "message_globals" => $messageGlobals
         ]);
 
         return $response;
@@ -36,7 +35,9 @@ class SMS
 
     public function getStatus($request_id)
     {
+
         $response = $this->client->get("/report/v1/message-log/{$request_id}");
+
         return $response;
     }
 }

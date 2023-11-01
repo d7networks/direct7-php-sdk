@@ -2,7 +2,7 @@
 
 namespace direct7\Direct7;
 
-class SMS
+class VIBER
 {
     private $client;
 
@@ -11,24 +11,24 @@ class SMS
         $this->client = $client;
     }
 
-    public function sendMessage($recipients, $content, $originator, $report_url = null, $unicode = false)
+    public function sendViberMessage($recipients, $content, $label, $originator, $call_back_url = null)
     {
+
         $message = [
-            "channel" => "sms",
+            "channel" => "viber",
             "recipients" => $recipients,
             "content" => $content,
-            "msg_type" => "text",
-            "data_coding" => $unicode ? "unicode" : "text",
+            "label" => $label
         ];
 
         $messageGlobals = [
             "originator" => $originator,
-            "report_url" => $report_url,
+            "call_back_url" => $call_back_url
         ];
 
-        $response = $this->client->post("/messages/v1/send", [
+        $response = $this->client->post("/viber/v1/send", [
             "messages" => [$message],
-            "message_globals" => $messageGlobals,
+            "message_globals" => $messageGlobals
         ]);
 
         return $response;
@@ -36,7 +36,9 @@ class SMS
 
     public function getStatus($request_id)
     {
-        $response = $this->client->get("/report/v1/message-log/{$request_id}");
+
+        $response = $this->client->get("/report/v1/viber-log/{$request_id}");
+
         return $response;
     }
 }
