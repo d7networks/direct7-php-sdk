@@ -14,7 +14,8 @@
         "number lookup",
         "slack",
         "viber",
-        "rest-api"
+        "rest-api",
+        "d7"
       ],
     "homepage": "https://d7networks.com/",
     "authors": [
