@@ -1,6 +1,7 @@
 {
     "name": "direct7/direct7-php",
     "description": "Direct7 SDK for PHP",
+    "version": "0.0.4",
     "type": "library",
     "license": "MIT",
     "keywords": [
