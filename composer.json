@@ -5,8 +5,14 @@
     "license": "MIT",
     "keywords": [
         "direct7",
-        "php",
-        "sdk",
+        "sms",
+        "whatsapp",
+        "verify",
+        "2fa",
+        "otp",
+        "number lookup",
+        "slack",
+        "viber",
         "rest-api"
       ],
     "homepage": "https://d7networks.com/",
