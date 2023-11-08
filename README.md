@@ -1,7 +1,7 @@
 # Direct7 PHP SDK
 
-This PHP SDK provides a convenient and easy-to-use interface to the Direct7 REST API. The SDK allows you to perform
-all the operations that are available through the REST API.
+PHP SDK to seamlessly incorporate communication features into your PHP applications via the Direct7 REST API. This SDK empowers you to effortlessly initiate SMS,Whatsapp, Slack, Viber  messages and 2 factor authentication features.
+
 
 ## Installation
 
