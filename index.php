@@ -8,7 +8,21 @@ use direct7\Direct7\Client;
 $direct7 = new Client("Your API token");
 
 try {
-    $response = $direct7->sms->sendMessage(recipients: ['+91999999XXXX'], content: 'Hello, World!', originator: 'Sender', report_url: 'https://example.com/callback', unicode: false);
+    $response = $direct7->sms->sendMessage(
+        'Sender',
+        'https://example.com/callback',
+        '2024-02-05T10:17:10+0000',
+        [
+            'recipients' => ["+91999999XXXX"],
+            'content' => 'Schedule Greetings from D7 API',
+            'unicode' => false,
+        ],
+        [
+            'recipients' => ["+91999999XXXX"],
+            'content' => 'Schedule Greetings from D7 API',
+            'unicode' => false,
+        ]
+    );
     var_dump($response);
 } catch (\Exception $error) {
     if ($error instanceof \direct7\Direct7\ValidationError) {

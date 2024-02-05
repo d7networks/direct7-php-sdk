@@ -58,22 +58,38 @@ use direct7\Direct7\Client;
 
 $direct7 = new Client(api_token="Your API token");
 
-$response = $direct7->sms->sendMessage(recipients: ['+91999999XXXX'], content: 'Hello, World!', originator: 'Sender', report_url: 'https://example.com/callback', unicode: false);
-
+$response = $direct7->sms->sendMessage(
+        'Sender',
+        'https://example.com/callback',
+        '2024-02-05T10:17:10+0000',
+        [
+            'recipients' => ["+91999XXXXXXX"],
+            'content' => 'Greetings from D7 API',
+            'unicode' => false,
+        ],
+    );
 var_dump($response);
 ```
 
-### Send an Unicode SMS
+### Send SMS (Unicode)
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 
 use direct7\Direct7\Client;
 
-$direct7 = new Client(api_token="Your API token");
+$client = new Client(api_token="Your API token")
 
-$response = $direct7->sms->sendMessage(recipients: ['+91999999XXXX'], content: 'مرحبا بالعالم!', originator: 'Sender', report_url: 'https://example.com/callback', unicode: true);
-
+$response = $direct7->sms->sendMessage(
+        'Sender',
+        'https://example.com/callback',
+        null,
+        [
+            'recipients' => ["+919999XXXXXX"],
+            'content' => 'لوحة المفاتيح العربية!',
+            'unicode' => true,
+        ]
+    );
 var_dump($response);
 ```
 

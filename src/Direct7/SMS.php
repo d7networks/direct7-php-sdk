@@ -11,25 +11,32 @@ class SMS
         $this->client = $client;
     }
 
-    public function sendMessage($recipients, $content, $originator, $report_url = null, $unicode = false)
+    public function sendMessage($originator, $report_url = null, $schedule_time = null, ...$args)
     {
-        $message = [
-            "channel" => "sms",
-            "recipients" => $recipients,
-            "content" => $content,
-            "msg_type" => "text",
-            "data_coding" => $unicode ? "unicode" : "text",
-        ];
+        $messages = [];
+
+        foreach ($args as $message) {
+            $messages[] = [
+                "channel" => "sms",
+                "recipients" => $message["recipients"] ?? [],
+                "content" => $message["content"] ?? "",
+                "msg_type" => "text",
+                "data_coding" => $message["unicode"] ? "unicode" : "text",
+            ];
+        }
 
         $messageGlobals = [
             "originator" => $originator,
             "report_url" => $report_url,
+            "schedule_time" => $schedule_time,
         ];
 
-        $response = $this->client->post("/messages/v1/send", [
-            "messages" => [$message],
+        $payload = [
+            "messages" => $messages,
             "message_globals" => $messageGlobals,
-        ]);
+        ];
+
+        $response = $this->client->post("/messages/v1/send", $payload);
 
         return $response;
     }
