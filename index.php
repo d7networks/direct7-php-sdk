@@ -186,4 +186,90 @@ try {
         echo "Error: " . $error->getMessage() . "\n";
     }
 }
+
+
+
+try {
+    $response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"XXXXXXXXXXX", recipient:"XXXXXXX", message_type:"CONTACTS", first_name:"Amal", last_name:"Anu", formatted_name:"Amal Anu", phones:["91906152XXXX", "91906152XXXX"], emails : ["amal@gmail.com","amal@gmail1.com"]);
+    $response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"XXXXXXXXXXX", recipient:"XXXXXXX", message_type:"TEXT", body: "Hi");
+    $response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"XXXXXXXXXXX", recipient:"XXXXXXX", message_type:"ATTACHMENT", type: "image", url: "https://upload.wikimedia.org", caption: "test");
+    $response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"XXXXXXXXXXX", recipient:"XXXXXXX", message_type:"LOCATION", latitude: "12.93803129081362", longitude: "77.61088653615994", name: "Karix Mobile Pvt Ltd", address: "30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095");
+    $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(originator:"XXXXXXXXXXX", recipient:"XXXXXXX", template_id: "lto_change_1", media_url: "https://miro.medium.com/max/780/1*9Wdo1PuiJTZo0Du2A9JLQQ.jpeg", lto_expiration_time_ms: "1708804800000", coupon_code: "DWS44");
+    $body_parameter_values = [];
+    $actions = [
+        [
+            "action_type" => "url",
+            "action_index" => "0",
+            "action_payload" => "dashboard"
+        ]
+    ];
+    
+    $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(originator: "+XXXXXXXXXX", recipient:"XXXXXXX", template_id:"click_me", body_parameter_values: $body_parameter_values, actions: $actions);
+    $cards = [
+        [
+            "card_index" => "0",
+            "components" => [
+                [
+                    "type" => "header",
+                    "parameters" => [
+                        [
+                            "type" => "image",
+                            "image" => [
+                                "link" => "https://miro.medium.com/max/780/1*9Wdo1PuiJTZo0Du2A9JLQQ.jpeg"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "button",
+                    "sub_type" => "quick_reply",
+                    "index" => "0",
+                    "parameters" => [
+                        [
+                            "type" => "payload",
+                            "payload" => "2259NqSd"
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        [
+            "card_index" => "1",
+            "components" => [
+                [
+                    "type" => "header",
+                    "parameters" => [
+                        [
+                            "type" => "image",
+                            "image" => [
+                                "link" => "https://www.selfdrive.ae/banner_image/desktop/21112023164328_409449002729.jpg"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "button",
+                    "sub_type" => "quick_reply",
+                    "index" => "0",
+                    "parameters" => [
+                        [
+                            "type" => "payload",
+                            "payload" => "59NqSdd"
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+    
+    $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(originator: "+XXXXXXXXXX", recipient:"XXXXXXX", template_id:"carousel_card", carousel_cards: $cards);
+    
+    var_dump($response);
+} catch (\Exception $error) {
+    if ($error instanceof \direct7\Direct7\ValidationError) {
+        echo "Validation Error: " . $error->getMessage() . "\n";
+    } else {
+        echo "Error: " . $error->getMessage() . "\n";
+    }
+}
 ?>
