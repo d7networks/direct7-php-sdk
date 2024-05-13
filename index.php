@@ -142,39 +142,6 @@ try {
     }
 }
 
-try {
-    $body_parameter_values = ["0" => 'Customer'];
-
-    $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(
-        '91906152XXXX',
-        '91999999XXXX',
-        'marketing_media_image',
-        $body_parameter_values,
-        'image',
-        'https://d7networks.com/static/resources/css/img/favicon.d27f70e6ebd0.png'
-    );
-
-    var_dump($response);
-} catch (\Exception $error) {
-    if ($error instanceof \direct7\Direct7\ValidationError) {
-        echo "Validation Error: " . $error->getMessage() . "\n";
-    } else {
-        echo "Error: " . $error->getMessage() . "\n";
-    }
-}
-
-
-
-try {
-    $response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"91906152XXXX", recipient:"91999999XXXX", message_type:"CONTACTS", first_name:"Amal", last_name:"Anu", display_name:"Amal Anu", phone:"91906152XXXX", email : "amal@gmail.com", url: "dscsd");
-    var_dump($response);
-} catch (\Exception $error) {
-    if ($error instanceof \direct7\Direct7\ValidationError) {
-        echo "Validation Error: " . $error->getMessage() . "\n";
-    } else {
-        echo "Error: " . $error->getMessage() . "\n";
-    }
-}
 
 try {
     $response = $direct7->whatsapp->getStatus('469affd7-0983-4bbc-9d07-ee43e1d1cfef');

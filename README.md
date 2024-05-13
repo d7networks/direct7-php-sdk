@@ -178,7 +178,7 @@ use direct7\Direct7\Client;
 
 $direct7 = new Client(api_token="Your API token");
 
-$response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"91999999XXXX", recipient:"91989898XXXX", message_type:"CONTACTS", first_name:"Test", last_name:"test", display_name:"Test test", phone:"91906152XXXX", email : "test@gmail.com");
+$response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"91999999XXXX", recipient:"91989898XXXX", message_type:"CONTACTS", first_name:"Amal", last_name:"Anu", formatted_name:"Amal Anu", phones:["91906152XXXX", "91906152XXXX"], emails : ["amal@gmail.com","amal2@gmail1.com"]);
 
 var_dump($response);
 
@@ -193,15 +193,7 @@ use direct7\Direct7\Client;
 
 $direct7 = new Client(api_token="Your API token");
 
-$body_parameter_values = ["0" => 'sisira'];
-
-$response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(
-    '9190615XXXXX',
-    '91999999XXXX',
-    'marketing_media_image',
-    $body_parameter_values,
-    'image',
-    'https://d7networks.com/static/resources/css/img/favicon.d27f70e6ebd0.png'
+$response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(originator:"91999999XXXX", recipient:"91989898XXXX", template_id: "lto_template", media_url: "https://miro.medium.com/max/780/1*9Wdo1PuiJTZo0Du2A9JLQQ.jpeg", lto_expiration_time_ms: "1708804800000", coupon_code: "DWS44"
 );
 
 var_dump($response);
