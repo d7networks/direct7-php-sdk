@@ -169,7 +169,7 @@ var_dump($response);
 
 ### Whatsapp
 
-### Send Whatsapp Free-form Message (Contact Details)
+### Send Whatsapp Free-form Message (Location Details)
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -178,7 +178,15 @@ use direct7\Direct7\Client;
 
 $direct7 = new Client(api_token="Your API token");
 
-$response = $direct7->whatsapp->sendWhatsAppFreeformMessage(originator:"91999999XXXX", recipient:"91989898XXXX", message_type:"CONTACTS", first_name:"Amal", last_name:"Anu", formatted_name:"Amal Anu", phones:["91906152XXXX", "91906152XXXX"], emails : ["amal@gmail.com","amal2@gmail1.com"]);
+$response = $direct7->whatsapp->sendWhatsAppFreeformMessage(
+        originator:"9715XXXXXXX", 
+        recipient:"91XX8675XXXX", 
+        message_type:"LOCATION", 
+        latitude: "12.93803129081362", 
+        longitude: "77.61088653615994", 
+        name: "Pvt Ltd", 
+        address: "Bengaluru, Karnataka"
+      );
 
 var_dump($response);
 
@@ -193,10 +201,45 @@ use direct7\Direct7\Client;
 
 $direct7 = new Client(api_token="Your API token");
 
-$response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(originator:"91999999XXXX", recipient:"91989898XXXX", template_id: "lto_template", media_url: "https://miro.medium.com/max/780/1*9Wdo1PuiJTZo0Du2A9JLQQ.jpeg", lto_expiration_time_ms: "1708804800000", coupon_code: "DWS44"
+$body_parameter_values = ["0" => 'first_parameter_in_your_template'];
+
+$response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(
+    originator: '9715XXXXXXX',
+    recipient: '91XX8675XXXX',
+    language: 'en',
+    template_id: 'template_id',
+    body_parameter_values: $body_parameter_values,
 );
 
 var_dump($response);
+
+```
+
+### Send Whatsapp Interactive Message.
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$parameters = [
+        "display_text" => "Visit Us",
+        "url" => "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
+      ];
+
+$response = $direct7->whatsapp->sendWhatsAppInteractiveMessage(
+    originator:"9715XXXXXXX", 
+    recipient:"91XX8675XXXX", 
+    interactive_type:"cta_url",
+    header_type:"text",
+    header_text:"Payment$ for D7 Whatsapp Service",
+    body_text:"Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+    footer_text:"Thank You", 
+    parameters: $parameters
+);
+
 
 ```
 

@@ -18,6 +18,10 @@ class WHATSAPP
         $first_name = null,
         $last_name = null,
         $formatted_name = null,
+        $middle_name = null,
+        $suffix = null,
+        $prefix = null,
+        $birthday = null,
         $phones = null,
         $emails = null,
         $urls = null,
@@ -28,7 +32,11 @@ class WHATSAPP
         $type = null,
         $url = null,
         $caption = null,
-        $body = null
+        $filename = null,
+        $body = null,
+        $message_id = null,
+        $emoji = null,
+        $contact_addresses = null,
     ) {
         $message = [
             "originator" => $originator,
@@ -39,22 +47,23 @@ class WHATSAPP
         ];
 
         if ($message_type == "CONTACTS") {
-            $message["content"]["contact"] = [
+            $message["content"]["contacts"] = [
+                [
                 "name" => [
                     "first_name" => $first_name,
                     "last_name" => $last_name,
                     "formatted_name" => $formatted_name,
+                    "middle_name" => $middle_name,
+                    "suffix" => $suffix,
+                    "prefix" => $prefix,
                 ],
-                "phones" => array_map(function ($phone) {
-                    return ["phone" => $phone];
-                }, $phones ?? []),
-                "emails" => array_map(function ($email) {
-                    return ["email" => $email];
-                }, $emails ?? []),
-                "urls" => array_map(function ($url) {
-                    return ["url" => $url];
-                }, $urls ?? []),
-            ];
+                "addresses" => $contact_addresses,
+                "birthday" => $birthday,
+                "phones" => $phones,
+                "emails" => $emails,
+                "urls" => $urls
+            ]
+        ];
         } elseif ($message_type == "LOCATION") {
             $message["content"]["location"] = [
                 "latitude" => $latitude,
@@ -63,14 +72,31 @@ class WHATSAPP
                 "address" => $address,
             ];
         } elseif ($message_type == "ATTACHMENT") {
-            $message["content"]["attachment"] = [
-                "type" => $type,
-                "url" => $url,
-                "caption" => $caption,
-            ];
+
+            if ($type == "document") {
+                $message["content"]["attachment"] = [
+                    "type" => $type,
+                    "url" => $url,
+                    "caption" => $caption,
+                    "filename" => $filename
+                ];
+            }
+            else {
+                $message["content"]["attachment"] = [
+                    "type" => $type,
+                    "url" => $url,
+                    "caption" => $caption
+                ];
+            }
         } elseif ($message_type == "TEXT") {
             $message["content"]["text"] = [
                 "body" => $body,
+            ];
+        }
+        elseif ($message_type == "REACTION") {
+            $message["content"]["reaction"] = [
+                "message_id" => $message_id,
+                "emoji" => $emoji
             ];
         }
 
@@ -83,13 +109,15 @@ class WHATSAPP
         $originator,
         $recipient,
         $template_id,
+        $language,
         $body_parameter_values = null,
         $media_type = null,
+        $text_header_title = null,
         $media_url = null,
         $latitude = null,
         $longitude = null,
-        $location_name = null,
-        $location_address = null,
+        $name = null,
+        $address = null,
         $lto_expiration_time_ms = null,
         $coupon_code = null,
         $actions = null,
@@ -98,6 +126,7 @@ class WHATSAPP
     ) {
         $template = [
             "template_id" => $template_id,
+            "language" => $language,
             "body_parameter_values" => (object)$body_parameter_values,
         ];
 
@@ -117,11 +146,17 @@ class WHATSAPP
                     "location" => [
                         "latitude" => $latitude,
                         "longitude" => $longitude,
-                        "name" => $location_name,
-                        "address" => $location_address,
+                        "name" => $name,
+                        "address" => $address,
                     ],
                 ];
-            } else {
+            } elseif ($media_type == "text")  {
+                $message["content"]["template"]["media"] = [
+                    "media_type" => $media_type,
+                    "text_header_title" => $text_header_title,
+                ];
+            }
+            else {
                 $message["content"]["template"]["media"] = [
                     "media_type" => $media_type,
                     "media_url" => $media_url,
@@ -169,6 +204,74 @@ class WHATSAPP
 
         return $response;
     }
+
+
+    public function sendWhatsAppInteractiveMessage(
+        $originator,
+        $recipient,
+        $interactive_type,
+        $header_type = null,
+        $header_text = null,
+        $header_link = null,
+        $header_file_name = null,
+        $body_text = null,
+        $footer_text = null,
+        $parameters = null,
+        $sections = null,
+        $buttons = null,
+        $list_button_text = null
+    ) {
+        $interactive = [
+            "type" => $interactive_type,
+            "header" => [
+                "type" => $header_type,
+            ],
+            "body" => [
+                "text" => $body_text,
+            ],
+            "footer" => [
+                "text" => $footer_text,
+            ]
+        ];
+    
+        $message = [
+            "originator" => $originator,
+            "recipients" => [["recipient" => $recipient]],
+            "content" => [
+                "message_type" => "INTERACTIVE",
+                "interactive" => $interactive,
+            ],
+        ];
+    
+        if ($header_type == "text") {
+            $message["content"]["interactive"]["header"]["text"] = $header_text;
+        } elseif ($header_type == "image" || $header_type == "video" || $header_type == "document") {
+            $message["content"]["interactive"]["header"][$header_type] = [
+                "filename" => $header_type == "document" ? $header_file_name : null,
+                "link" => $header_link
+            ];
+        }
+    
+        if ($interactive_type == "cta_url") {
+            $message["content"]["interactive"]["action"] = [
+                "parameters" => $parameters
+            ];
+        } elseif ($interactive_type == "button") {
+            $message["content"]["interactive"]["action"] = [
+                "buttons" => $buttons,
+            ];
+        } elseif ($interactive_type == "list") {
+            $message["content"]["interactive"]["action"] = [
+                "sections" => $sections,
+                "button" => $list_button_text
+            ];
+        }
+    
+        $response = $this->client->post("/whatsapp/v2/send", ["messages" => [$message]]);
+    
+        return $response;
+    }
+    
 
     public function getStatus($request_id)
     {
