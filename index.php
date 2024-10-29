@@ -294,6 +294,78 @@ try {
       buttons: $buttons
     );
 
+    // interactive: location request message
+
+    $response = $direct7->whatsapp->sendWhatsAppInteractiveMessage(
+      originator:"9715XXXXXXX", 
+      recipient:"91XX8675XXXX", 
+      interactive_type:"location_request_message",
+      body_text: "Let's Start with your pickup"
+    );
+
+    // interactive: Address Message
+    $address_parameters = [
+        "country"=> "IN",
+        "values"=> [
+           "name"=> "Steni Mariya",
+           "phone_number"=> "+971549758543",
+           "in_pin_code"=> 687826,
+           "house_number"=> "45",
+           "floor_number"=> "3",
+          "tower_number"=> 34,
+          "building_name"=> "Excel",
+          "address"=> "House nammmme",
+          "landmark_area"=> "Near Mobile Tower",
+          "city"=> "Thrissur",
+          "state"=> "Kerala"
+        ],
+      "saved_addresses"=> [
+          [
+          "id"=> "address1",
+           "value"=> [
+           "name"=> "Lifiya Mariya",
+           "phone_number"=> "+971569698543",
+           "in_pin_code"=> 6843426,
+           "house_number"=> "45",
+           "floor_number"=> "3",
+          "tower_number"=> 34,
+          "building_name"=> "Excel",
+          "address"=> "House nammmme",
+          "landmark_area"=> "Near Mobile Tower",
+          "city"=> "Thrissur",
+          "state"=> "Kerala"
+           ]
+    ],
+          [
+          "id"=> "address1",
+           "value"=> [
+           "name"=> "Mariya",
+           "phone_number"=> "+971589652543",
+           "in_pin_code"=> 680012,
+           "house_number"=> "45",
+           "floor_number"=> "3",
+          "tower_number"=> 34,
+          "building_name"=> "Excel",
+          "address"=> "House nammmme",
+          "landmark_area"=> "Near Mobile Tower",
+          "city"=> "Thrissur",
+          "state"=> "Kerala"
+           ]
+          ]
+      ]
+    ]
+
+    $response = $direct7->whatsapp->sendWhatsAppInteractiveMessage(
+      originator:"9715XXXXXXX", 
+      recipient:"91XX8675XXXX", 
+      interactive_type:"button",
+      header_type:"image",
+      header_link:"https://karix.s3.ap-south-1.amazonaws.com/English-4.jpg",
+      body_text:"Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+      footer_text:"Thank You",
+      parameters: $address_parameters
+    );
+
 
     // interactive: list
     $sections = [

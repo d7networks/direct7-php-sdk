@@ -265,6 +265,14 @@ class WHATSAPP
                 "sections" => $sections,
                 "button" => $list_button_text
             ];
+        } elseif ($interactive_type == "location_request_message") {
+            $message["content"]["interactive"]["action"] = [
+                "name" => "send_location"
+            ];
+        } elseif ($interactive_type == "address_message") {
+            $message["content"]["interactive"]["action"] = [
+                "parameters" => $parameters
+            ];
         }
     
         $response = $this->client->post("/whatsapp/v2/send", ["messages" => [$message]]);
