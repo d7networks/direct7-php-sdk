@@ -287,6 +287,13 @@ class WHATSAPP
 
         return $response;
     }
+
+    public function readReceipt($message_id)
+    {
+        $response = $this->client->get("/whatsapp/v2/read-receipt/{$message_id}");
+
+        return $response;
+    }
 }
 
 ?>

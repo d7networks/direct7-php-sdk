@@ -154,6 +154,17 @@ try {
     }
 }
 
+try {
+    $response = $direct7->whatsapp->readReceipt('769affd7-0983-4bbc-9d07-ee43e1d1cfef');
+    var_dump($response);
+} catch (\Exception $error) {
+    if ($error instanceof \direct7\Direct7\ValidationError) {
+        echo "Validation Error: " . $error->getMessage() . "\n";
+    } else {
+        echo "Error: " . $error->getMessage() . "\n";
+    }
+}
+
 
 
 try {
