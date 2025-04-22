@@ -258,6 +258,36 @@ var_dump($response);
 
 ```
 
+### Whatsapp Read Receipt
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->whatsapp->readReceipt('469affd7-0983-4bbc-9d07-ee43e1d1cfef');
+
+var_dump($response);
+
+```
+
+### Whatsapp Download User Initiated Media
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->whatsapp->downloadMedia('16534343434');
+
+var_dump($response);
+
+```
+
 ### Number Lookup
 
 ### Search Phone Number Details

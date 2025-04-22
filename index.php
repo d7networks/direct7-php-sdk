@@ -165,7 +165,16 @@ try {
     }
 }
 
-
+try {
+    $response = $direct7->whatsapp->downloadMedia('165343434343');
+    var_dump($response);
+} catch (\Exception $error) {
+    if ($error instanceof \direct7\Direct7\ValidationError) {
+        echo "Validation Error: " . $error->getMessage() . "\n";
+    } else {
+        echo "Error: " . $error->getMessage() . "\n";
+    }
+}
 
 try {
     // TEXT

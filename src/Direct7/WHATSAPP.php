@@ -294,6 +294,13 @@ class WHATSAPP
 
         return $response;
     }
+
+    public function downloadMedia($media_id)
+    {
+        $response = $this->client->get("/whatsapp/v2/download/{$media_id}");
+
+        return $response;
+    }
 }
 
 ?>
