@@ -11,7 +11,7 @@ class SMS
         $this->client = $client;
     }
 
-    public function sendMessage($originator, $report_url, $schedule_time, ...$args)
+    public function sendMessage($originator, $report_url, $schedule_time, $tag, ...$args)
     {
         $messages = [];
 
@@ -29,6 +29,7 @@ class SMS
             "originator" => $originator,
             "report_url" => $report_url,
             "schedule_time" => $schedule_time,
+            "tag" => $tag,
         ];
 
         $payload = [
