@@ -120,6 +120,7 @@ class WHATSAPP
         $address = null,
         $lto_expiration_time_ms = null,
         $coupon_code = null,
+        $button_flow = null,
         $actions = null,
         $quick_replies = null,
         $carousel_cards = null
@@ -181,7 +182,11 @@ class WHATSAPP
                 ],
             ];
         }
-
+        if ($button_flow) {
+            $message['content']['template']['buttons'] =[
+                "button_flow" =>$button_flow
+            ];
+        }
         if ($actions) {
             $message["content"]["template"]["buttons"] = [
                 "actions" => $actions
@@ -273,8 +278,10 @@ class WHATSAPP
             $message["content"]["interactive"]["action"] = [
                 "parameters" => $parameters
             ];
+        } elseif ($interactive_type == 'flow') {
+            $message["content"]["interactive"]["action"] = $parameters;
         }
-    
+
         $response = $this->client->post("/whatsapp/v2/send", ["messages" => [$message]]);
     
         return $response;

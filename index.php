@@ -428,6 +428,31 @@ try {
       sections: $sections
     );
 
+     // Interactive :Flow
+     $flow_parameter = [
+        "name" => "flow",
+        "parameters" => [
+            "flow_message_version" => "3",
+            "flow_token" => "unused",
+            "flow_id" => "530404409952136",
+            "flow_cta" => "Book Demo",
+            "flow_action" => "navigate",
+            "flow_action_payload" => [
+                "screen" => "screen_"
+            ]
+        ]
+    ];
+
+     $response = $direct7->whatsapp->sendWhatsAppInteractiveMessage(
+      originator:"9715XXXXXXX",
+      recipient:"91XX8675XXXX",
+      interactive_type:"flow",
+      header_type:"text",
+      header_text:"Payment$ for D7 Whatsapp Service",
+      body_text:"Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+      footer_text:"Thank You",
+      parameters:$flow_parameter
+    );
 
     // templated: no example body
     $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(
@@ -519,6 +544,22 @@ try {
         language: 'en',
         template_id:'quick_reply',
         quick_replies: $quick_replies
+    );
+    // Templated :Button_flow
+   $button_flow = [
+        [
+            "flow_token" => "unused",
+            "action_type" => "flow",
+            "index" => "0",
+            "flow_action_data" => []
+        ]
+    ];
+    $response = $direct7->whatsapp->sendWhatsAppTemplatedMessage(
+        originator:'9715XXXXXXX',
+        recipient:'91XX8675XXXX',
+        template_id:'benq_owew',
+        language: 'en',
+        button_flow:$button_flow
     );
 
     // Templated: action
