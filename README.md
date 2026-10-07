@@ -166,6 +166,68 @@ var_dump($response);
 
 ```
 
+### Verify V2
+
+Verify V2 is available under `$direct7->verify->v2`. Existing `$direct7->verify` calls continue to use V1.
+
+### Send OTP (V2)
+
+V2 uses a verification flow created in the dashboard (channels, language and message are configured in the flow).
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->verify->v2->sendOtp(recipient:'+97150900XXXX', flowId:'Your flow ID');
+
+var_dump($response);
+```
+
+### Re-Send OTP (V2)
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->verify->v2->resendOtp(otpId:'0012c7f5-2ba5-49db-8901-4ee9be6dc8d1');
+
+var_dump($response);
+```
+
+### Verify OTP (V2)
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->verify->v2->verifyOtp(otpId:'0012c7f5-2ba5-49db-8901-4ee9be6dc8d1', otpCode:'1425');
+var_dump($response);
+
+```
+
+### Check OTP Request Status (V2)
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use direct7\Direct7\Client;
+
+$direct7 = new Client(api_token="Your API token");
+
+$response = $direct7->verify->v2->getStatus(otpId:'0012c7f5-2ba5-49db-8901-4ee9be6dc8d1');
+var_dump($response);
+
+```
+
 
 ### Whatsapp
 
